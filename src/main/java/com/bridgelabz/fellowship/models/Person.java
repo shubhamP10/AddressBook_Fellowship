@@ -87,4 +87,16 @@ public class Person
         this.zip = zip;
     }
 
+    @Override
+    public String toString() {
+        return "Person{" +
+                "fname='" + fname + '\'' +
+                ", lname='" + lname + '\'' +
+                ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", phone='" + phone + '\'' +
+                ", zip='" + zip + '\'' +
+                '}';
+    }
 }
