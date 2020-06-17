@@ -158,20 +158,20 @@ public class Helper {
 //  This Method will View Person by City and State
     public void viewByCityAndState()
     {
-        Dictionary<String ,String> cityDict = createCityDict();
-        Dictionary<String ,String> stateDict = createStateDict();
+        Map<String ,String> cityDict = createCityDict();
+        Map<String ,String> stateDict = createStateDict();
         final String city,state;
         System.out.println("Enter City");
         city=InputUtil.getStringValue();
         System.out.println("Enter State");
         state=InputUtil.getStringValue();
-        Search.searchByCityAndState(cityDict,stateDict);
+        Search.searchByCityAndState(cityDict,stateDict,city,state);
     } //End of viewByCityAndState() Method
 
 //    Create City Dictionary
-    public Dictionary<String,String> createCityDict()
+    public Map<String,String> createCityDict()
     {
-        Dictionary<String,String> cityDict = new Hashtable<String ,String>();
+        Map<String,String> cityDict = new Hashtable<String ,String>();
         for (Person person:PERSON)
         {
             cityDict.put(person.getFname(),person.getCity());
@@ -180,9 +180,9 @@ public class Helper {
     }
 
 //    Create State Dictionary
-    public Dictionary<String,String> createStateDict()
+    public Map<String,String> createStateDict()
     {
-        Dictionary<String,String> stateDict = new Hashtable<String ,String>();
+        Map<String,String> stateDict = new Hashtable<String ,String>();
         for (Person person:PERSON)
         {
             stateDict.put(person.getFname(),person.getState());
