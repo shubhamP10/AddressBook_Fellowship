@@ -1,4 +1,5 @@
 package com.bridgelabz.fellowship.models;
+import com.bridgelabz.fellowship.services.Sort;
 import com.bridgelabz.fellowship.utils.InputUtil;
 
 import java.util.*;
@@ -15,11 +16,11 @@ public class Helper {
         while(i==0) {
             System.out.print("Enter First Name : ");
             fname = InputUtil.getStringValue();
-            if (checkExists(fname)) {
+            if (checkExists(fname)) { //calling checkExits() method to check Fname already exists or not.
                 System.out.println("Person Name Already Exists!!\nPlease enter different name...");
             }
             else {
-                i=1;
+                i=1; //if not found exits from loop & continues for next step
             }
         }
         System.out.print("Enter Last Name : ");
@@ -121,7 +122,14 @@ public class Helper {
         System.out.print("\nEnter #ID to delete Contact : ");
         id = InputUtil.getIntValue();
         PERSON.remove(id);
+    } //end of delete() method
+
+    public void sortRecords()
+    {
+        Sort.sortByName(PERSON);
     }
+
+//    this function will check for duplicate users
     public boolean checkExists(String fname)
     {
         int flag=0;
