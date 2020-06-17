@@ -155,6 +155,31 @@ public class Helper {
         }
     } //End of Sort() Method
 
+//    This Method Will Search Person By City or State
+    public void searchByCityState()
+    {
+        int choice=0;
+        System.out.println("Search By\n" +
+                            "1: City\n" +
+                            "2: State\n" +
+                            "3: back");
+        choice=InputUtil.getIntValue();
+        switch (choice)
+        {
+            case 1 :
+                Search.searchByCity(PERSON);
+                break;
+            case 2 :
+                break;
+            case 3 :
+                return;
+            default:
+                System.out.println("Enter Valid Option");
+        }
+    }
+
+
+
 //  This Method will View Person by City and State
     public void viewByCityAndState()
     {
