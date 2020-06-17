@@ -20,7 +20,8 @@ public class AddressBook {
             System.out.println("3: Edit Person     ");
             System.out.println("4: Delete Person     ");
             System.out.println("5: Sort     ");
-            System.out.println("6: Exit		       \n");
+            System.out.println("6: View Person By City and State     ");
+            System.out.println("7: Exit		       \n");
 //			System.out.println(" -----------------------");
             System.out.println("--- Enter Your Choice ---");
             choice = InputUtil.getIntValue();
@@ -42,6 +43,9 @@ public class AddressBook {
                     help.sortRecords();
                     break;
                 case 6 :
+                    help.viewByCityAndState();
+                    break;
+                case 7 :
                     i=1;
                     break;
                 default :

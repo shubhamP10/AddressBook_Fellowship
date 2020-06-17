@@ -1,5 +1,7 @@
 package com.bridgelabz.fellowship.models;
+import com.bridgelabz.fellowship.services.Search;
 import com.bridgelabz.fellowship.services.Sort;
+import com.bridgelabz.fellowship.services.Search;
 import com.bridgelabz.fellowship.utils.InputUtil;
 
 import java.util.*;
@@ -124,8 +126,8 @@ public class Helper {
         PERSON.remove(id);
     } //end of delete() method
 
-    public void sortRecords()
-    {
+//    This Method will Sort the Address book by Name, city, state and Zip
+    public void sortRecords() {
         System.out.println("Sort By...\n"
                 + "1: First Name\n"
                 + "2: City\n"
@@ -133,25 +135,59 @@ public class Helper {
                 + "4: Zip Code\n"
                 + "5: Back");
         int choice = InputUtil.getIntValue();
-        switch (choice)
-        {
+        switch (choice) {
             case 1:
                 Sort.sortByName(PERSON);
                 break;
-            case 2 :
+            case 2:
                 Sort.sortByZip(PERSON);
                 break;
-            case 3 :
+            case 3:
                 Sort.sortByState(PERSON);
                 break;
-            case 4 :
+            case 4:
                 Sort.sortByZip(PERSON);
                 break;
-            case 5 :
+            case 5:
                 return;
             default:
                 System.out.println("Please Enter Valid Option...");
         }
+    } //End of Sort() Method
+
+//  This Method will View Person by City and State
+    public void viewByCityAndState()
+    {
+        Dictionary<String ,String> cityDict = createCityDict();
+        Dictionary<String ,String> stateDict = createStateDict();
+        final String city,state;
+        System.out.println("Enter City");
+        city=InputUtil.getStringValue();
+        System.out.println("Enter State");
+        state=InputUtil.getStringValue();
+        Search.searchByCityAndState(cityDict,stateDict);
+    } //End of viewByCityAndState() Method
+
+//    Create City Dictionary
+    public Dictionary<String,String> createCityDict()
+    {
+        Dictionary<String,String> cityDict = new Hashtable<String ,String>();
+        for (Person person:PERSON)
+        {
+            cityDict.put(person.getFname(),person.getCity());
+        }
+        return cityDict;
+    }
+
+//    Create State Dictionary
+    public Dictionary<String,String> createStateDict()
+    {
+        Dictionary<String,String> stateDict = new Hashtable<String ,String>();
+        for (Person person:PERSON)
+        {
+            stateDict.put(person.getFname(),person.getState());
+        }
+        return stateDict;
     }
 
 //    this function will check for duplicate users
