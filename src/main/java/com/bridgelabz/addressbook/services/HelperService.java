@@ -1,14 +1,14 @@
-package com.bridgelabz.addressbook.models;
+package com.bridgelabz.addressbook.services;
 
 import com.bridgelabz.addressbook.exception.AddressBookException;
-import com.bridgelabz.addressbook.services.SearchSortService;
+import com.bridgelabz.addressbook.models.Person;
 import com.bridgelabz.addressbook.utility.InputUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Helper {
-    List<Person> PERSON = new ArrayList<>();
+public class HelperService {
+    List<Person> personList = new ArrayList<>();
 
     public void addRecord() {
         int i = 0;
@@ -36,16 +36,14 @@ public class Helper {
         System.out.print("Enter state : ");
         state = InputUtil.getStringValue();
 
-        PERSON.add(new Person(firstName, lastName, address, city, state, phone, zip));
+        personList.add(new Person(firstName, lastName, address, city, state, phone, zip));
     }
 
     public void displayRecord() {
-        if (PERSON.isEmpty()) {
+        if (personList.isEmpty()) {
             System.out.println("No Records To Display!!!");
         } else {
-            for (Person person : PERSON) {
-                System.out.println(person);
-            }
+            personList.forEach(System.out::println);
         }
 
     }
@@ -54,15 +52,15 @@ public class Helper {
         int id, i = 0;
         String address, city, state, phone, zip;
         try {
-            if (PERSON.isEmpty()) {
+            if (personList.isEmpty()) {
                 System.out.println("No Records To Edit!!!");
             } else {
-                for (Person person : PERSON) {
-                    System.out.println("ID: #" + PERSON.indexOf(person) + " : " + person);
+                for (Person person : personList) {
+                    System.out.println("ID: #" + personList.indexOf(person) + " : " + person);
                 }
                 System.out.print("\nEnter #ID to Edit Contact : ");
                 id = InputUtil.getIntValue();
-                System.out.println(PERSON.get(id));
+                System.out.println(personList.get(id));
                 while (i == 0) {
                     System.out.println("What You Want to edit...\n"
                             + "\t1: Address\n"
@@ -76,27 +74,27 @@ public class Helper {
                         case 1:
                             System.out.print("Enter new Address : ");
                             address = InputUtil.getStringValue();
-                            PERSON.get(id).setAddress(address);
+                            personList.get(id).setAddress(address);
                             break;
                         case 2:
                             System.out.print("Enter new City : ");
                             city = InputUtil.getStringValue();
-                            PERSON.get(id).setCity(city);
+                            personList.get(id).setCity(city);
                             break;
                         case 3:
                             System.out.print("Enter new State : ");
                             state = InputUtil.getStringValue();
-                            PERSON.get(id).setState(state);
+                            personList.get(id).setState(state);
                             break;
                         case 4:
                             System.out.print("Enter new Phone : ");
                             phone = InputUtil.getStringValue();
-                            PERSON.get(id).setPhone(phone);
+                            personList.get(id).setPhone(phone);
                             break;
                         case 5:
                             System.out.print("Enter new Zip Code : ");
                             zip = InputUtil.getStringValue();
-                            PERSON.get(id).setZip(zip);
+                            personList.get(id).setZip(zip);
                             break;
                         case 6:
                             i = 1;
@@ -104,7 +102,7 @@ public class Helper {
                         default:
                             System.out.println("Please Enter Valid Option");
                     }
-                    System.out.println(PERSON.get(id));
+                    System.out.println(personList.get(id));
                 }
             }
         } catch (IndexOutOfBoundsException e) {
@@ -115,15 +113,13 @@ public class Helper {
     public void deleteRecord() throws AddressBookException {
         try {
             int id;
-            if (PERSON.isEmpty()) {
+            if (personList.isEmpty()) {
                 System.out.println("No Records To Delete!!!");
             } else {
-                for (Person p : PERSON) {
-                    System.out.println("ID: #" + PERSON.indexOf(p) + " : " + p);
-                }
+                personList.stream().map(p -> "ID: #" + personList.indexOf(p) + " : " + p).forEach(System.out::println);
                 System.out.print("\nEnter #ID to delete Contact : ");
                 id = InputUtil.getIntValue();
-                PERSON.remove(id);
+                personList.remove(id);
             }
         } catch (IndexOutOfBoundsException e) {
             throw new AddressBookException("Entered Wrong #ID", AddressBookException.exceptionType.ENTERED_WRONG_ID);
@@ -140,16 +136,16 @@ public class Helper {
         int choice = InputUtil.getIntValue();
         switch (choice) {
             case 1:
-                SearchSortService.sortByName(PERSON);
+                SearchSortService.sortByName(personList);
                 break;
             case 2:
-                SearchSortService.sortByCity(PERSON);
+                SearchSortService.sortByCity(personList);
                 break;
             case 3:
-                SearchSortService.sortByState(PERSON);
+                SearchSortService.sortByState(personList);
                 break;
             case 4:
-                SearchSortService.sortByZip(PERSON);
+                SearchSortService.sortByZip(personList);
                 break;
             case 5:
                 return;
@@ -160,13 +156,7 @@ public class Helper {
 
 
     public boolean checkExists(String firstName) {
-        int flag = 0;
-        for (Person p : PERSON) {
-            if (p.getFirstName().equalsIgnoreCase(firstName)) {
-                flag = 1;
-                break;
-            }
-        }
+        int flag = personList.stream().anyMatch(p -> p.getFirstName().equalsIgnoreCase(firstName)) ? 1 : 0;
         return flag == 1;
     }
 
@@ -180,10 +170,10 @@ public class Helper {
             int choice = InputUtil.getIntValue();
             switch (choice) {
                 case 1:
-                    SearchSortService.searchByCity(PERSON);
+                    SearchSortService.searchByCity(personList);
                     break;
                 case 2:
-                    SearchSortService.searchByState(PERSON);
+                    SearchSortService.searchByState(personList);
                     break;
                 case 3:
                     i = 1;

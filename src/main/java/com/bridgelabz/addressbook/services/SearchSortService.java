@@ -20,7 +20,7 @@ public class SearchSortService {
 
     public static void searchByCity(List<Person> person) {
         String search;
-        List<Person> matches = new ArrayList<Person>();
+        List<Person> matches = new ArrayList<>();
         System.out.println("Enter First Name to search : ");
         search = InputUtil.getStringValue();
         int flag = 0;
@@ -49,7 +49,6 @@ public class SearchSortService {
         search = InputUtil.getStringValue();
         for (Person p : person) {
             if (p.getState().equalsIgnoreCase(search)) {
-
                 flag = 1;
                 matches.add(p);
             }
@@ -66,29 +65,21 @@ public class SearchSortService {
 
     public static void sortByName(List<Person> person) {
         person.sort(Person.firstNameSorting);
-        for (Person p : person) {
-            System.out.println(p);
-        }
+        person.forEach(System.out::println);
     }
 
     public static void sortByCity(List<Person> person) {
         person.sort(Person.citySorting);
-        for (Person p : person) {
-            System.out.println(p);
-        }
+        person.forEach(System.out::println);
     }
 
     public static void sortByState(List<Person> person) {
         person.sort(Person.stateSorting);
-        for (Person p : person) {
-            System.out.println(p);
-        }
+        person.forEach(System.out::println);
     }
 
     public static void sortByZip(List<Person> person) {
         person.sort(Person.zipSorting);
-        for (Person p : person) {
-            System.out.println(p);
-        }
+        person.forEach(System.out::println);
     }
 }

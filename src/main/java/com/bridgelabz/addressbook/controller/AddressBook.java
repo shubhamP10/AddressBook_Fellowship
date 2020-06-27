@@ -3,16 +3,16 @@
  *main code for address book management
  *this file is the gateway for all functions
  */
-package com.bridgelabz.addressbook.main;
+package com.bridgelabz.addressbook.controller;
 
 import com.bridgelabz.addressbook.exception.AddressBookException;
-import com.bridgelabz.addressbook.models.Helper;
+import com.bridgelabz.addressbook.services.HelperService;
 import com.bridgelabz.addressbook.utility.InputUtil;
 
 public class AddressBook {
     public static void main(String[] args) throws AddressBookException {
         int i = 0;
-        final Helper help = new Helper();
+        final HelperService help = new HelperService();
         while (i == 0) {
             System.out.println("--- Address Book Management ---\n");
             System.out.println("\t--MENU--");
