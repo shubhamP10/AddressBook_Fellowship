@@ -1,15 +1,15 @@
-package com.bridgelabz.fellowship.utils;
+package com.bridgelabz.addressbook.utility;
+
 import java.util.Scanner;
 
-public class InputUtil
-{
+public class InputUtil {
     private final static Scanner sc = new Scanner(System.in);
-    public static int getIntValue()
-    {
+
+    public static int getIntValue() {
         return sc.nextInt();
     }
-    public static String getStringValue()
-    {
+
+    public static String getStringValue() {
         return sc.next();
     }
 }
