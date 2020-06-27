@@ -154,13 +154,12 @@ public class HelperService {
         }
     }
 
-
     public boolean checkExists(String firstName) {
         int flag = personList.stream().anyMatch(p -> p.getFirstName().equalsIgnoreCase(firstName)) ? 1 : 0;
         return flag == 1;
     }
 
-    public void SearchInRecords() {
+    public void searchInRecords() {
         int i = 0;
         while (i == 0) {
             System.out.println("1. Search By City\n" +

@@ -5,19 +5,8 @@ import com.bridgelabz.addressbook.utility.InputUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class SearchSortService {
-    public static void searchByCityAndState(Map<String, String> cityDict, Map<String, String> stateDict, String city, String state) {
-        System.out.println("In Progress...");
-        System.out.println(cityDict);
-        System.out.println(stateDict);
-        List<String> cityMatch = cityDict.entrySet().stream()
-                .filter(e -> city.equals(e.getValue())).map(Map.Entry::getKey).collect(Collectors.toList());
-        System.out.println(cityMatch);
-    }
-
     public static void searchByCity(List<Person> person) {
         String search;
         List<Person> matches = new ArrayList<>();
@@ -26,7 +15,6 @@ public class SearchSortService {
         int flag = 0;
         for (Person p : person) {
             if (p.getCity().equalsIgnoreCase(search)) {
-
                 flag = 1;
                 matches.add(p);
             }

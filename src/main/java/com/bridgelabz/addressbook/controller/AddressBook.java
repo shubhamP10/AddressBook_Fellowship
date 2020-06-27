@@ -42,7 +42,7 @@ public class AddressBook {
                     help.sortRecords();
                     break;
                 case 6:
-                    help.SearchInRecords();
+                    help.searchInRecords();
                     break;
                 case 7:
                     i = 1;
