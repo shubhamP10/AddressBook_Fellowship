@@ -10,12 +10,12 @@ import java.util.List;
 /*Helper Class to Perform AddressBook Operations
  * Add, Display, Edit, Delete, Search, Sort
  */
-public class AddressBookService {
+public class AddressBookService implements IAddressBookService {
     List<Person> personList = new ArrayList<>();
 
     /*Method Search the Person By City
-    * @Param Person List
-    */
+     * @Param Person List
+     */
     public static void searchByCity(List<Person> person) {
         String search;
         List<Person> matches = new ArrayList<>();
@@ -245,8 +245,8 @@ public class AddressBookService {
     }
 
     /*Method to Check Duplication of First Name
-    * @Param FirstName
-    */
+     * @Param FirstName
+     */
     public boolean checkExists(String firstName) {
         int flag = personList.stream().anyMatch(p -> p.getFirstName().equalsIgnoreCase(firstName)) ? 1 : 0;
         return flag == 1;
