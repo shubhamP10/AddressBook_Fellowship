@@ -6,13 +6,13 @@
 package com.bridgelabz.addressbook.controller;
 
 import com.bridgelabz.addressbook.exception.AddressBookException;
-import com.bridgelabz.addressbook.services.HelperService;
+import com.bridgelabz.addressbook.services.AddressBookService;
 import com.bridgelabz.addressbook.utility.InputUtil;
 
 public class AddressBook {
     public static void main(String[] args) throws AddressBookException {
         int i = 0;
-        final HelperService help = new HelperService();
+        final AddressBookService help = new AddressBookService();
         while (i == 0) {
             System.out.println("--- Address Book Management ---\n");
             System.out.println("\t--MENU--");

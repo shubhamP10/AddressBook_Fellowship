@@ -7,9 +7,95 @@ import com.bridgelabz.addressbook.utility.InputUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HelperService {
+/*Helper Class to Perform AddressBook Operations
+ * Add, Display, Edit, Delete, Search, Sort
+ */
+public class AddressBookService {
     List<Person> personList = new ArrayList<>();
 
+    /*Method Search the Person By City
+    * @Param Person List
+    */
+    public static void searchByCity(List<Person> person) {
+        String search;
+        List<Person> matches = new ArrayList<>();
+        System.out.println("Enter First Name to search : ");
+        search = InputUtil.getStringValue();
+        int flag = 0;
+        for (Person p : person) {
+            if (p.getCity().equalsIgnoreCase(search)) {
+                flag = 1;
+                matches.add(p);
+            }
+        }
+        if (flag == 1) {
+            System.out.println("...Match Found...");
+            for (Person p : matches) {
+                System.out.println(p);
+            }
+        } else {
+            System.out.println("Match Not Found!!!");
+        }
+    }
+
+    /*Method Search the Person By State
+     * @Param Person List
+     */
+    public static void searchByState(List<Person> person) {
+        String search;
+        int flag = 0;
+        List<Person> matches = new ArrayList<>();
+        System.out.println("Enter First Name to search : ");
+        search = InputUtil.getStringValue();
+        for (Person p : person) {
+            if (p.getState().equalsIgnoreCase(search)) {
+                flag = 1;
+                matches.add(p);
+            }
+        }
+        if (flag == 1) {
+            System.out.println("...Match Found...");
+            for (Person p : matches) {
+                System.out.println(p);
+            }
+        } else {
+            System.out.println("Match Not Found!!!");
+        }
+    }
+
+    /*Method Sort the Records By Name
+     * @Param Person List
+     */
+    public static void sortByName(List<Person> person) {
+        person.sort(Person.firstNameSorting);
+        person.forEach(System.out::println);
+    }
+
+    /*Method Sort the Records By City
+     * @Param Person List
+     */
+    public static void sortByCity(List<Person> person) {
+        person.sort(Person.citySorting);
+        person.forEach(System.out::println);
+    }
+
+    /*Method Sort the Records By State
+     * @Param Person List
+     */
+    public static void sortByState(List<Person> person) {
+        person.sort(Person.stateSorting);
+        person.forEach(System.out::println);
+    }
+
+    /*Method Sort the Records By Zip
+     * @Param Person List
+     */
+    public static void sortByZip(List<Person> person) {
+        person.sort(Person.zipSorting);
+        person.forEach(System.out::println);
+    }
+
+    /*Method Add Person Record*/
     public void addRecord() {
         int i = 0;
         String firstName = null;
@@ -39,6 +125,7 @@ public class HelperService {
         personList.add(new Person(firstName, lastName, address, city, state, phone, zip));
     }
 
+    /*Method to Display Person Records*/
     public void displayRecord() {
         if (personList.isEmpty()) {
             System.out.println("No Records To Display!!!");
@@ -48,6 +135,7 @@ public class HelperService {
 
     }
 
+    /*Method to Edit Person Record*/
     public void editRecord() throws AddressBookException {
         int id, i = 0;
         String address, city, state, phone, zip;
@@ -110,6 +198,7 @@ public class HelperService {
         }
     }
 
+    /*Method to Delete Person Record*/
     public void deleteRecord() throws AddressBookException {
         try {
             int id;
@@ -126,6 +215,7 @@ public class HelperService {
         }
     }
 
+    /*Method for Sort Menu*/
     public void sortRecords() {
         System.out.println("Sort By...\n"
                 + "1: First Name\n"
@@ -136,16 +226,16 @@ public class HelperService {
         int choice = InputUtil.getIntValue();
         switch (choice) {
             case 1:
-                SearchSortService.sortByName(personList);
+                sortByName(personList);
                 break;
             case 2:
-                SearchSortService.sortByCity(personList);
+                sortByCity(personList);
                 break;
             case 3:
-                SearchSortService.sortByState(personList);
+                sortByState(personList);
                 break;
             case 4:
-                SearchSortService.sortByZip(personList);
+                sortByZip(personList);
                 break;
             case 5:
                 return;
@@ -154,11 +244,15 @@ public class HelperService {
         }
     }
 
+    /*Method to Check Duplication of First Name
+    * @Param FirstName
+    */
     public boolean checkExists(String firstName) {
         int flag = personList.stream().anyMatch(p -> p.getFirstName().equalsIgnoreCase(firstName)) ? 1 : 0;
         return flag == 1;
     }
 
+    /*Method for Search Menu*/
     public void searchInRecords() {
         int i = 0;
         while (i == 0) {
@@ -169,10 +263,10 @@ public class HelperService {
             int choice = InputUtil.getIntValue();
             switch (choice) {
                 case 1:
-                    SearchSortService.searchByCity(personList);
+                    searchByCity(personList);
                     break;
                 case 2:
-                    SearchSortService.searchByState(personList);
+                    searchByState(personList);
                     break;
                 case 3:
                     i = 1;

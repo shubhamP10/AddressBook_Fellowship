@@ -35,6 +35,7 @@ public class Person {
     private String phone;
     private String zip;
 
+    /*Constructor to initialize fields*/
     public Person(String firstName, String lastName, String address, String city, String state, String phone, String zip) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -45,6 +46,7 @@ public class Person {
         this.zip = zip;
     }
 
+    /*Getter & Setter Methods*/
     public String getFirstName() {
         return firstName;
     }
