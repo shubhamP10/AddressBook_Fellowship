@@ -51,6 +51,14 @@ public class Person {
         return firstName;
     }
 
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
     public void setAddress(String address) {
         this.address = address;
     }

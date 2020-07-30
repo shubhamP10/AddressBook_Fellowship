@@ -3,7 +3,11 @@ package com.bridgelabz.addressbook.services;
 import com.bridgelabz.addressbook.exception.AddressBookException;
 import com.bridgelabz.addressbook.models.Person;
 import com.bridgelabz.addressbook.utility.InputUtil;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +15,9 @@ import java.util.List;
  * Add, Display, Edit, Delete, Search, Sort
  */
 public class AddressBookService implements IAddressBookService {
-    List<Person> personList = new ArrayList<>();
+    private final List<Person> personList = new ArrayList<>();
 
+    JSONArray personArray = new JSONArray();
     /*Method Search the Person By City
      * @Param Person List
      */
@@ -121,8 +126,23 @@ public class AddressBookService implements IAddressBookService {
         zip = InputUtil.getStringValue();
         System.out.print("Enter state : ");
         state = InputUtil.getStringValue();
+        Person person = new Person(firstName, lastName, address, city, state, phone, zip);
+        personList.add(person);
+        this.writeToJSONFile(person);
+    }
 
-        personList.add(new Person(firstName, lastName, address, city, state, phone, zip));
+    private void writeToJSONFile(Person person) {
+        JSONObject personDetails = new JSONObject();
+        personDetails.put("first Name",person.getFirstName());
+        personDetails.put("last Name",person.getLastName());
+        personDetails.put("Phone",person.getPhone());
+        personArray.add(personDetails);
+        try (FileWriter file = new FileWriter("PersonDetails.json")) {
+            file.write(personArray.toJSONString());
+            file.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /*Method to Display Person Records*/
@@ -132,7 +152,6 @@ public class AddressBookService implements IAddressBookService {
         } else {
             personList.forEach(System.out::println);
         }
-
     }
 
     /*Method to Edit Person Record*/
