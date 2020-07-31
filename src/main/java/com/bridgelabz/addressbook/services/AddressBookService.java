@@ -1,5 +1,6 @@
 package com.bridgelabz.addressbook.services;
 
+import com.bridgelabz.addressbook.enums.sortOptions;
 import com.bridgelabz.addressbook.exception.AddressBookException;
 import com.bridgelabz.addressbook.models.Person;
 import com.bridgelabz.addressbook.utility.InputUtil;
@@ -64,50 +65,25 @@ public class AddressBookService implements IAddressBookService {
         }
     }
 
-    /*Method Sort the Records By Name
+    /*Method Sort the Records
      * @Param Person List
      */
-    public static void sortByName(List<Person> person) {
-        person.sort(Person.firstNameSorting);
-        person.forEach(System.out::println);
-    }
-
-    /*Method Sort the Records By City
-     * @Param Person List
-     */
-    public static void sortByCity(List<Person> person) {
-        person.sort(Person.citySorting);
-        person.forEach(System.out::println);
-    }
-
-    /*Method Sort the Records By State
-     * @Param Person List
-     */
-    public static void sortByState(List<Person> person) {
-        person.sort(Person.stateSorting);
-        person.forEach(System.out::println);
-    }
-
-    /*Method Sort the Records By Zip
-     * @Param Person List
-     */
-    public static void sortByZip(List<Person> person) {
-        person.sort(Person.zipSorting);
-        person.forEach(System.out::println);
+    public static void sortData(List<Person> person, sortOptions sortOptions) {
+       person.stream().sorted(sortOptions.comparator).forEach(System.out::println);
     }
 
     /*Method Add Person Record*/
-    public LinkedList<Person> addRecord(LinkedList<Person> person) {
-        int i = 0;
+    public LinkedList<Person> addRecord(LinkedList<Person> personList) {
+        int flag = 0;
         String firstName = null;
         final String lastName, address, city, state, phone, zip;
-        while (i == 0) {
+        while (flag == 0) {
             System.out.print("Enter First Name : ");
             firstName = InputUtil.getStringValue();
-            if (checkExists(firstName, person)) {
+            if (checkExists(firstName, personList)) {
                 System.out.println("Person Name Already Exists!!\nPlease enter different name...");
             } else {
-                i = 1;
+                flag = 1;
             }
         }
         System.out.print("Enter Last Name : ");
@@ -122,9 +98,9 @@ public class AddressBookService implements IAddressBookService {
         zip = InputUtil.getStringValue();
         System.out.print("Enter state : ");
         state = InputUtil.getStringValue();
-        Person person1 = new Person(firstName, lastName, address, city, state, phone, zip);
-        person.add(person1);
-        return person;
+        Person person = new Person(firstName, lastName, address, city, state, zip, phone);
+        personList.add(person);
+        return personList;
     }
 
     /*Method to Display Person Records*/
@@ -138,7 +114,7 @@ public class AddressBookService implements IAddressBookService {
 
     /*Method to Edit Person Record*/
     public LinkedList<Person> editRecord(LinkedList<Person> person) throws AddressBookException {
-        int id, i = 0;
+        int id, flag = 0;
         String address, city, state, phone, zip;
         try {
             if (person.isEmpty()) {
@@ -150,7 +126,7 @@ public class AddressBookService implements IAddressBookService {
                 System.out.print("\nEnter #ID to Edit Contact : ");
                 id = InputUtil.getIntValue();
                 System.out.println(person.get(id));
-                while (i == 0) {
+                while (flag == 0) {
                     System.out.println("What You Want to edit...\n"
                             + "\t1: Address\n"
                             + "\t2: city\n"
@@ -186,7 +162,7 @@ public class AddressBookService implements IAddressBookService {
                             person.get(id).setZip(zip);
                             break;
                         case 6:
-                            i = 1;
+                            flag = 1;
                             break;
                         default:
                             System.out.println("Please Enter Valid Option");
@@ -232,16 +208,16 @@ public class AddressBookService implements IAddressBookService {
         int choice = InputUtil.getIntValue();
         switch (choice) {
             case 1:
-                sortByName(personList);
+                sortData(personList, sortOptions.NAME);
                 break;
             case 2:
-                sortByCity(personList);
+                sortData(personList, sortOptions.CITY);
                 break;
             case 3:
-                sortByState(personList);
+                sortData(personList, sortOptions.STATE);
                 break;
             case 4:
-                sortByZip(personList);
+                sortData(personList, sortOptions.ZIP);
                 break;
             case 5:
                 return;
@@ -261,8 +237,8 @@ public class AddressBookService implements IAddressBookService {
 
     /*Method for Search Menu*/
     public void searchInRecords(LinkedList<Person> person) {
-        int i = 0;
-        while (i == 0) {
+        int flag = 0;
+        while (flag == 0) {
             System.out.println("1. Search By City\n" +
                     "2. Search By State\n" +
                     "3. Back\n" +
@@ -276,7 +252,7 @@ public class AddressBookService implements IAddressBookService {
                     searchByState(person);
                     break;
                 case 3:
-                    i = 1;
+                    flag = 1;
                     break;
                 default:
                     System.out.println("Please Enter Correct Option...");
