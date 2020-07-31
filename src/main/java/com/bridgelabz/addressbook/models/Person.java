@@ -36,7 +36,7 @@ public class Person {
     private String zip;
 
     /*Constructor to initialize fields*/
-    public Person(String firstName, String lastName, String address, String city, String state, String phone, String zip) {
+    public Person(String firstName, String lastName, String address, String city, String state, String zip, String phone) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -47,6 +47,26 @@ public class Person {
     }
 
     /*Getter & Setter Methods*/
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -59,36 +79,16 @@ public class Person {
         return phone;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getCity() {
         return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
     }
 
     public String getState() {
         return state;
     }
 
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public String getZip() {
         return zip;
-    }
-
-    public void setZip(String zip) {
-        this.zip = zip;
     }
 
     public String getAddress() {
@@ -97,14 +97,11 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
-                "First Name ='" + firstName + '\'' +
-                ", Last Name ='" + lastName + '\'' +
-                ", Address ='" + address + '\'' +
-                ", City ='" + city + '\'' +
-                ", State ='" + state + '\'' +
-                ", Phone ='" + phone + '\'' +
-                ", Zip ='" + zip + '\'' +
-                '}';
+        return "\nFull Name : " + firstName + " " + lastName +
+                "\nAddress : " + address +
+                "\nCity : " + city +
+                "\nState : " + state +
+                "\nPhone : " + phone +
+                "\nZip : " + zip + "\n";
     }
 }

@@ -1,19 +1,23 @@
 package com.bridgelabz.addressbook.services;
 
 import com.bridgelabz.addressbook.exception.AddressBookException;
+import com.bridgelabz.addressbook.models.Person;
+
+import java.util.LinkedList;
 
 public interface IAddressBookService {
-    void addRecord();
 
-    void editRecord() throws AddressBookException;
+    LinkedList<Person> addRecord(LinkedList<Person> personList);
 
-    void displayRecord();
+    LinkedList<Person> editRecord(LinkedList<Person> person) throws AddressBookException;
 
-    void deleteRecord() throws AddressBookException;
+    void displayRecord(LinkedList<Person> person);
 
-    void sortRecords();
+    LinkedList<Person> deleteRecord(LinkedList<Person> personList) throws AddressBookException;
 
-    void searchInRecords();
+    void sortRecords(LinkedList<Person> person);
 
-    boolean checkExists(String firstName);
+    void searchInRecords(LinkedList<Person> person);
+
+    boolean checkExists(String firstName, LinkedList<Person> person);
 }

@@ -6,14 +6,34 @@
 package com.bridgelabz.addressbook.controller;
 
 import com.bridgelabz.addressbook.exception.AddressBookException;
+import com.bridgelabz.addressbook.models.Person;
 import com.bridgelabz.addressbook.services.AddressBookService;
 import com.bridgelabz.addressbook.utility.InputUtil;
+import com.bridgelabz.addressbook.utility.JSONSampleOperations;
+
+import java.util.LinkedList;
 
 public class AddressBook {
     public static void main(String[] args) throws AddressBookException {
-        int i = 0;
-        final AddressBookService help = new AddressBookService();
-        while (i == 0) {
+        final String JSON_SIMPLE_FILE_PATH = "src\\main\\resources\\JSonSimpleAddressBook.json";
+        final String OPEN_CSV_FILE_PATH = "src\\main\\resources\\CSVAddressBook.csv";
+        int flag = 0;
+        String filePath = null;
+        LinkedList<Person> personList;
+        JSONSampleOperations jsonSampleOperations = new JSONSampleOperations();
+        final AddressBookService addressBookService = new AddressBookService();
+
+        System.out.println("Select Below Operations:\n1. JSON SAMPLE\n2.OPEN CSV \n");
+        int option = InputUtil.getIntValue();
+        switch (option) {
+            case 1:
+                filePath = JSON_SIMPLE_FILE_PATH;
+                break;
+            case 2:
+                filePath = OPEN_CSV_FILE_PATH;
+                break;
+        }
+        while (flag == 0) {
             System.out.println("--- Address Book Management ---\n");
             System.out.println("\t--MENU--");
             System.out.println("1: Add New Person      ");
@@ -27,25 +47,46 @@ public class AddressBook {
             int choice = InputUtil.getIntValue();
             switch (choice) {
                 case 1:
-                    help.addRecord();
+                    if (option == 1) {
+                        personList = jsonSampleOperations.getDataInList(filePath);
+                        personList = addressBookService.addRecord(personList);
+                        jsonSampleOperations.convertToFile(personList, filePath);
+                    }
                     break;
                 case 2:
-                    help.displayRecord();
+                    if (option == 1) {
+                        LinkedList<Person> person = jsonSampleOperations.getDataInList(filePath);
+                        addressBookService.displayRecord(person);
+                    }
                     break;
                 case 3:
-                    help.editRecord();
+                    if (option == 1) {
+                        LinkedList<Person> person = jsonSampleOperations.getDataInList(filePath);
+                        LinkedList<Person> record = addressBookService.editRecord(person);
+                        jsonSampleOperations.convertToFile(record, filePath);
+                    }
                     break;
                 case 4:
-                    help.deleteRecord();
+                    if (option == 1) {
+                        personList = jsonSampleOperations.getDataInList(filePath);
+                        personList = addressBookService.deleteRecord(personList);
+                        jsonSampleOperations.convertToFile(personList, filePath);
+                    }
                     break;
                 case 5:
-                    help.sortRecords();
+                    if (option == 1) {
+                        LinkedList<Person> person = jsonSampleOperations.getDataInList(filePath);
+                        addressBookService.sortRecords(person);
+                    }
                     break;
                 case 6:
-                    help.searchInRecords();
+                    if (option == 1) {
+                        LinkedList<Person> person = jsonSampleOperations.getDataInList(filePath);
+                        addressBookService.searchInRecords(person);
+                    }
                     break;
                 case 7:
-                    i = 1;
+                    flag = 1;
                     break;
                 default:
                     System.out.println("Please Enter Valid Option!!!");
