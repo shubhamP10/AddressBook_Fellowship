@@ -91,6 +91,10 @@ public class Person {
         this.zip = zip;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
     @Override
     public String toString() {
         return "Person{" +

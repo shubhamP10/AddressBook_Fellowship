@@ -3,6 +3,7 @@ package com.bridgelabz.addressbook.services;
 import com.bridgelabz.addressbook.exception.AddressBookException;
 import com.bridgelabz.addressbook.models.Person;
 import com.bridgelabz.addressbook.utility.InputUtil;
+import com.bridgelabz.addressbook.utility.WriteToCSV;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -129,6 +130,7 @@ public class AddressBookService implements IAddressBookService {
         Person person = new Person(firstName, lastName, address, city, state, phone, zip);
         personList.add(person);
         this.writeToJSONFile(person);
+        WriteToCSV.writeAddCSV(personList);
     }
 
     private void writeToJSONFile(Person person) {
@@ -204,6 +206,7 @@ public class AddressBookService implements IAddressBookService {
                             personList.get(id).setZip(zip);
                             break;
                         case 6:
+                            WriteToCSV.writeFromEdit(personList);
                             i = 1;
                             break;
                         default:
@@ -228,6 +231,7 @@ public class AddressBookService implements IAddressBookService {
                 System.out.print("\nEnter #ID to delete Contact : ");
                 id = InputUtil.getIntValue();
                 personList.remove(id);
+                WriteToCSV.writeFromDelete(personList);
             }
         } catch (IndexOutOfBoundsException e) {
             throw new AddressBookException("Entered Wrong #ID", AddressBookException.exceptionType.ENTERED_WRONG_ID);
