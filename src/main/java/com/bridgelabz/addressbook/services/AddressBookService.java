@@ -7,16 +7,13 @@ import com.bridgelabz.addressbook.utility.InputUtil;
 import com.bridgelabz.addressbook.utility.WriteToCSV;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
-/*Helper Class to Perform AddressBook Operations
- * Add, Display, Edit, Delete, Search, Sort
- */
 public class AddressBookService implements IAddressBookService {
 
-    /*Method Search the Person By City
-     * @Param Person List
+    /**
+     * Method To Search Person By City
+     * @param person List
      */
     public static void searchByCity(List<Person> person) {
         String search;
@@ -40,8 +37,9 @@ public class AddressBookService implements IAddressBookService {
         }
     }
 
-    /*Method Search the Person By State
-     * @Param Person List
+    /**
+     * Method To Search Person By State
+     * @param person List
      */
     public static void searchByState(List<Person> person) {
         String search;
@@ -65,15 +63,21 @@ public class AddressBookService implements IAddressBookService {
         }
     }
 
-    /*Method Sort the Records
-     * @Param Person List
+    /**
+     * Method To Sort Data
+     * @param person List
+     * @param sortOptions Enum
      */
     public static void sortData(List<Person> person, sortOptions sortOptions) {
        person.stream().sorted(sortOptions.comparator).forEach(System.out::println);
     }
 
-    /*Method Add Person Record*/
-    public LinkedList<Person> addRecord(LinkedList<Person> personList) {
+    /**
+     * Method To Add Person Records
+     * @param personList List
+     * @return PersonList
+     */
+    public List<Person> addRecord(List<Person> personList) {
         int flag = 0;
         String firstName = null;
         final String lastName, address, city, state, phone, zip;
@@ -103,8 +107,11 @@ public class AddressBookService implements IAddressBookService {
         return personList;
     }
 
-    /*Method to Display Person Records*/
-    public void displayRecord(LinkedList<Person> person) {
+    /**
+     * Method To Display Person Records
+     * @param person List
+     */
+    public void displayRecord(List<Person> person) {
         if (person.isEmpty()) {
             System.out.println("No Records To Display!!!");
         } else {
@@ -112,8 +119,13 @@ public class AddressBookService implements IAddressBookService {
         }
     }
 
-    /*Method to Edit Person Record*/
-    public LinkedList<Person> editRecord(LinkedList<Person> person) throws AddressBookException {
+    /**
+     * Method To Edit Person Records
+     * @param person List
+     * @return PersonList
+     * @throws AddressBookException
+     */
+    public List<Person> editRecord(List<Person> person) throws AddressBookException {
         int id, flag = 0;
         String address, city, state, phone, zip;
         try {
@@ -177,8 +189,13 @@ public class AddressBookService implements IAddressBookService {
         return person;
     }
 
-    /*Method to Delete Person Record*/
-    public LinkedList<Person> deleteRecord(LinkedList<Person> personList) throws AddressBookException {
+    /**
+     * Method To Delete Person Details
+     * @param personList
+     * @return PersonList
+     * @throws AddressBookException
+     */
+    public List<Person> deleteRecord(List<Person> personList) throws AddressBookException {
         try {
             int id;
             if (personList.isEmpty()) {
@@ -197,8 +214,11 @@ public class AddressBookService implements IAddressBookService {
         return personList;
     }
 
-    /*Method for Sort Menu*/
-    public void sortRecords(LinkedList<Person> personList) {
+    /**
+     * Method To Sort Records By Given Options
+     * @param personList
+     */
+    public void sortRecords(List<Person> personList) {
         System.out.println("Sort By...\n"
                 + "1: First Name\n"
                 + "2: City\n"
@@ -226,17 +246,21 @@ public class AddressBookService implements IAddressBookService {
         }
     }
 
-    /*Method to Check Duplication of First Name
+    /**
+     * Method to Check Duplication of First Name
      * @Param FirstName
      */
-    public boolean checkExists(String firstName, LinkedList<Person> person) {
+    public boolean checkExists(String firstName, List<Person> person) {
         int flag = person.stream()
                 .anyMatch(p -> p.getFirstName().equalsIgnoreCase(firstName)) ? 1 : 0;
         return flag == 1;
     }
 
-    /*Method for Search Menu*/
-    public void searchInRecords(LinkedList<Person> person) {
+    /**
+     * Method To Search In Person Records
+     * @param person
+     */
+    public void searchInRecords(List<Person> person) {
         int flag = 0;
         while (flag == 0) {
             System.out.println("1. Search By City\n" +
