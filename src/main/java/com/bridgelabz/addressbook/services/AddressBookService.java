@@ -1,10 +1,9 @@
 package com.bridgelabz.addressbook.services;
 
-import com.bridgelabz.addressbook.enums.sortOptions;
+import com.bridgelabz.addressbook.enums.SortOptions;
 import com.bridgelabz.addressbook.exception.AddressBookException;
 import com.bridgelabz.addressbook.models.Person;
 import com.bridgelabz.addressbook.utility.InputUtil;
-import com.bridgelabz.addressbook.utility.WriteToCSV;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,7 @@ public class AddressBookService implements IAddressBookService {
     public static void searchByCity(List<Person> person) {
         String search;
         List<Person> matches = new ArrayList<>();
-        System.out.println("Enter First Name to search : ");
+        System.out.println("Enter City Name to Search : ");
         search = InputUtil.getStringValue();
         int flag = 0;
         for (Person p : person) {
@@ -45,7 +44,7 @@ public class AddressBookService implements IAddressBookService {
         String search;
         int flag = 0;
         List<Person> matches = new ArrayList<>();
-        System.out.println("Enter First Name to search : ");
+        System.out.println("Enter State Name to search : ");
         search = InputUtil.getStringValue();
         for (Person p : person) {
             if (p.getState().equalsIgnoreCase(search)) {
@@ -68,7 +67,7 @@ public class AddressBookService implements IAddressBookService {
      * @param person List
      * @param sortOptions Enum
      */
-    public static void sortData(List<Person> person, sortOptions sortOptions) {
+    public static void sortData(List<Person> person, SortOptions sortOptions) {
        person.stream().sorted(sortOptions.comparator).forEach(System.out::println);
     }
 
@@ -205,7 +204,6 @@ public class AddressBookService implements IAddressBookService {
                 System.out.print("\nEnter #ID to delete Contact : ");
                 id = InputUtil.getIntValue();
                 personList.remove(id);
-                WriteToCSV.writeFromDelete(personList);
             }
         } catch (IndexOutOfBoundsException e) {
             throw new AddressBookException("Entered Wrong #ID",
@@ -228,16 +226,16 @@ public class AddressBookService implements IAddressBookService {
         int choice = InputUtil.getIntValue();
         switch (choice) {
             case 1:
-                sortData(personList, sortOptions.NAME);
+                sortData(personList, SortOptions.NAME);
                 break;
             case 2:
-                sortData(personList, sortOptions.CITY);
+                sortData(personList, SortOptions.CITY);
                 break;
             case 3:
-                sortData(personList, sortOptions.STATE);
+                sortData(personList, SortOptions.STATE);
                 break;
             case 4:
-                sortData(personList, sortOptions.ZIP);
+                sortData(personList, SortOptions.ZIP);
                 break;
             case 5:
                 return;

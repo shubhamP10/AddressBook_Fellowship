@@ -14,6 +14,8 @@ import com.bridgelabz.addressbook.utility.InputUtil;
 import java.io.IOException;
 import java.util.List;
 
+import static java.lang.System.exit;
+
 public class AddressBook {
 
     public static void main(String[] args) throws AddressBookException, IOException {
@@ -42,6 +44,9 @@ public class AddressBook {
                 filePath = GSON_JSON_FILE_PATH;
                 operations = gsonOperation;
                 break;
+            default:
+                System.out.println("Invalid Choice!!!");
+                exit(0);
         }
         while (flag == 0) {
             System.out.println("--- Address Book Management ---\n");
@@ -57,32 +62,32 @@ public class AddressBook {
             int choice = InputUtil.getIntValue();
             switch (choice) {
                 case 1:
-                        personList = fileOperations.getDataInList(filePath, operations);
-                        personList = addressBookService.addRecord(personList);
-                        fileOperations.convertToFile(personList, filePath, operations);
+                    personList = fileOperations.getDataInList(filePath, operations);
+                    personList = addressBookService.addRecord(personList);
+                    fileOperations.convertToFile(personList, filePath, operations);
                     break;
                 case 2:
-                        List<Person> person = fileOperations.getDataInList(filePath, operations);
-                        addressBookService.displayRecord(person);
+                    List<Person> person = fileOperations.getDataInList(filePath, operations);
+                    addressBookService.displayRecord(person);
                     break;
                 case 3:
-                        personList = fileOperations.getDataInList(filePath, operations);
-                        personList = addressBookService.editRecord(personList);
-                        fileOperations.convertToFile(personList, filePath, operations);
+                    personList = fileOperations.getDataInList(filePath, operations);
+                    personList = addressBookService.editRecord(personList);
+                    fileOperations.convertToFile(personList, filePath, operations);
 
                     break;
                 case 4:
-                        personList = fileOperations.getDataInList(filePath, operations);
-                        personList = addressBookService.deleteRecord(personList);
-                        fileOperations.convertToFile(personList, filePath, operations);
+                    personList = fileOperations.getDataInList(filePath, operations);
+                    personList = addressBookService.deleteRecord(personList);
+                    fileOperations.convertToFile(personList, filePath, operations);
                     break;
                 case 5:
-                        personList = fileOperations.getDataInList(filePath, operations);
-                        addressBookService.sortRecords(personList);
+                    personList = fileOperations.getDataInList(filePath, operations);
+                    addressBookService.sortRecords(personList);
                     break;
                 case 6:
-                        personList = fileOperations.getDataInList(filePath, operations);
-                        addressBookService.searchInRecords(personList);
+                    personList = fileOperations.getDataInList(filePath, operations);
+                    addressBookService.searchInRecords(personList);
                     break;
                 case 7:
                     flag = 1;

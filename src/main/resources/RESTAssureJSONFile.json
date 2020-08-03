@@ -1,0 +1,28 @@
+{
+  "AddressBook": [
+    {
+      "id": 1,
+      "Zip": "587301",
+      "Address": "Badiger Galli",
+      "Phone": "8105215414",
+      "State": "KA",
+      "Name": "Shubhamm",
+      "City": "Jamkhandi"
+    },
+    {
+      "id": 2,
+      "Zip": "5556699",
+      "Address": "PN",
+      "Phone": "5566998870",
+      "State": "MH",
+      "Name": "Aniket",
+      "City": "Bhadrawati"
+    },
+    {
+      "Name": "nikhil",
+      "Phone": "9898989898",
+      "State": "TN",
+      "id": 3
+    }
+  ]
+}
