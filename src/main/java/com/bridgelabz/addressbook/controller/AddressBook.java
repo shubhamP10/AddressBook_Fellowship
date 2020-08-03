@@ -8,6 +8,7 @@ package com.bridgelabz.addressbook.controller;
 import com.bridgelabz.addressbook.exception.AddressBookException;
 import com.bridgelabz.addressbook.models.Person;
 import com.bridgelabz.addressbook.services.AddressBookService;
+import com.bridgelabz.addressbook.utility.AddressBookUtility;
 import com.bridgelabz.addressbook.utility.FileOperations;
 import com.bridgelabz.addressbook.utility.InputUtil;
 
@@ -27,6 +28,7 @@ public class AddressBook {
         String filePath = null;
         List<Person> personList;
         FileOperations fileOperations = new FileOperations();
+        AddressBookUtility addressBookUtility = new AddressBookUtility();
         final AddressBookService addressBookService = new AddressBookService();
 
         System.out.println("Select Below Operations:\n1. Using JSON SAMPLE\n2. Using OPEN CSV\n3. Using GSON \n");
@@ -78,16 +80,16 @@ public class AddressBook {
                     break;
                 case 4:
                     personList = fileOperations.getDataInList(filePath, operations);
-                    personList = addressBookService.deleteRecord(personList);
+                    personList = addressBookUtility.deleteRecord(personList);
                     fileOperations.convertToFile(personList, filePath, operations);
                     break;
                 case 5:
                     personList = fileOperations.getDataInList(filePath, operations);
-                    addressBookService.sortRecords(personList);
+                    addressBookUtility.sortRecords(personList);
                     break;
                 case 6:
                     personList = fileOperations.getDataInList(filePath, operations);
-                    addressBookService.searchInRecords(personList);
+                    addressBookUtility.searchInRecords(personList);
                     break;
                 case 7:
                     flag = 1;

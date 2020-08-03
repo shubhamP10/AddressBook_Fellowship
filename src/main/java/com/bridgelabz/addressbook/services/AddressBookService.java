@@ -14,49 +14,22 @@ public class AddressBookService implements IAddressBookService {
      * Method To Search Person By City
      * @param person List
      */
-    public static void searchByCity(List<Person> person) {
-        String search;
+    public static void searchBy(List<Person> person, String searchItem) {
         List<Person> matches = new ArrayList<>();
-        System.out.println("Enter City Name to Search : ");
-        search = InputUtil.getStringValue();
         int flag = 0;
         for (Person p : person) {
-            if (p.getCity().equalsIgnoreCase(search)) {
+            if (p.getCity().equalsIgnoreCase(searchItem)) {
+                flag = 1;
+                matches.add(p);
+            }
+            else if (p.getState().equalsIgnoreCase(searchItem)){
                 flag = 1;
                 matches.add(p);
             }
         }
         if (flag == 1) {
             System.out.println("...Match Found...");
-            for (Person p : matches) {
-                System.out.println(p);
-            }
-        } else {
-            System.out.println("Match Not Found!!!");
-        }
-    }
-
-    /**
-     * Method To Search Person By State
-     * @param person List
-     */
-    public static void searchByState(List<Person> person) {
-        String search;
-        int flag = 0;
-        List<Person> matches = new ArrayList<>();
-        System.out.println("Enter State Name to search : ");
-        search = InputUtil.getStringValue();
-        for (Person p : person) {
-            if (p.getState().equalsIgnoreCase(search)) {
-                flag = 1;
-                matches.add(p);
-            }
-        }
-        if (flag == 1) {
-            System.out.println("...Match Found...");
-            for (Person p : matches) {
-                System.out.println(p);
-            }
+            matches.forEach(System.out::println);
         } else {
             System.out.println("Match Not Found!!!");
         }
@@ -116,6 +89,12 @@ public class AddressBookService implements IAddressBookService {
         } else {
             person.forEach(System.out::println);
         }
+    }
+
+    @Override
+    public List<Person> deleteRecord(List<Person> personList, int id) {
+        personList.remove(id);
+        return personList;
     }
 
     /**
@@ -189,62 +168,6 @@ public class AddressBookService implements IAddressBookService {
     }
 
     /**
-     * Method To Delete Person Details
-     * @param personList
-     * @return PersonList
-     * @throws AddressBookException
-     */
-    public List<Person> deleteRecord(List<Person> personList) throws AddressBookException {
-        try {
-            int id;
-            if (personList.isEmpty()) {
-                System.out.println("No Records To Delete!!!");
-            } else {
-                personList.stream().map(p -> "ID: #" + personList.indexOf(p) + " : " + p).forEach(System.out::println);
-                System.out.print("\nEnter #ID to delete Contact : ");
-                id = InputUtil.getIntValue();
-                personList.remove(id);
-            }
-        } catch (IndexOutOfBoundsException e) {
-            throw new AddressBookException("Entered Wrong #ID",
-                    AddressBookException.exceptionType.ENTERED_WRONG_ID);
-        }
-        return personList;
-    }
-
-    /**
-     * Method To Sort Records By Given Options
-     * @param personList
-     */
-    public void sortRecords(List<Person> personList) {
-        System.out.println("Sort By...\n"
-                + "1: First Name\n"
-                + "2: City\n"
-                + "3: State\n"
-                + "4: Zip Code\n"
-                + "5: Back");
-        int choice = InputUtil.getIntValue();
-        switch (choice) {
-            case 1:
-                sortData(personList, SortOptions.NAME);
-                break;
-            case 2:
-                sortData(personList, SortOptions.CITY);
-                break;
-            case 3:
-                sortData(personList, SortOptions.STATE);
-                break;
-            case 4:
-                sortData(personList, SortOptions.ZIP);
-                break;
-            case 5:
-                return;
-            default:
-                System.out.println("Please Enter Valid Option...");
-        }
-    }
-
-    /**
      * Method to Check Duplication of First Name
      * @Param FirstName
      */
@@ -252,33 +175,5 @@ public class AddressBookService implements IAddressBookService {
         int flag = person.stream()
                 .anyMatch(p -> p.getFirstName().equalsIgnoreCase(firstName)) ? 1 : 0;
         return flag == 1;
-    }
-
-    /**
-     * Method To Search In Person Records
-     * @param person
-     */
-    public void searchInRecords(List<Person> person) {
-        int flag = 0;
-        while (flag == 0) {
-            System.out.println("1. Search By City\n" +
-                    "2. Search By State\n" +
-                    "3. Back\n" +
-                    "Choose Your Option");
-            int choice = InputUtil.getIntValue();
-            switch (choice) {
-                case 1:
-                    searchByCity(person);
-                    break;
-                case 2:
-                    searchByState(person);
-                    break;
-                case 3:
-                    flag = 1;
-                    break;
-                default:
-                    System.out.println("Please Enter Correct Option...");
-            }
-        }
     }
 }

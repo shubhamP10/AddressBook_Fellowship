@@ -13,11 +13,7 @@ public interface IAddressBookService {
 
     void displayRecord(List<Person> person);
 
-    List<Person> deleteRecord(List<Person> personList) throws AddressBookException;
-
-    void sortRecords(List<Person> personList);
-
-    void searchInRecords(List<Person> person);
+    List<Person> deleteRecord(List<Person> personList, int id) throws AddressBookException;
 
     boolean checkExists(String firstName, List<Person> person);
 }
