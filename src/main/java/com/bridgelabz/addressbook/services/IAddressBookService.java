@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IAddressBookService {
 
-    List<Person> addRecord(List<Person> personList);
+    List<Person> addRecord(List<Person> personList, Person person);
 
     List<Person> editRecord(List<Person> person) throws AddressBookException;
 
@@ -15,5 +15,4 @@ public interface IAddressBookService {
 
     List<Person> deleteRecord(List<Person> personList, int id) throws AddressBookException;
 
-    boolean checkExists(String firstName, List<Person> person);
 }

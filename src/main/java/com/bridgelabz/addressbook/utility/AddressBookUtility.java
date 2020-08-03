@@ -15,6 +15,43 @@ public class AddressBookUtility {
     AddressBookService addressBookService = new AddressBookService();
 
     /**
+     * Method To Add Person Records
+     * @param personList List
+     * @return PersonList
+     */
+    public List<Person> addRecord(List<Person> personList) {
+        int flag = 0;
+        String firstName = null;
+        final String lastName, address, city, state, phone, zip;
+        while (flag == 0) {
+            firstName = ValidateInputs.validateName("First Name");
+            if (checkExists(firstName, personList)) {
+                System.out.println("Person Name Already Exists!!\nPlease enter different name...");
+            } else {
+                flag = 1;
+            }
+        }
+        lastName = ValidateInputs.validateName("Last Name");
+        phone = ValidateInputs.validatePhone();
+        address = ValidateInputs.validateAddress();
+        city = ValidateInputs.validateName("City");
+        zip = ValidateInputs.validateZip();
+        state = ValidateInputs.validateName("State");
+        Person person = new Person(firstName, lastName, address, city, state, zip, phone);
+        return addressBookService.addRecord(personList,person);
+    }
+
+    /**
+     * Method to Check Duplication of First Name
+     * @Param FirstName
+     */
+    public boolean checkExists(String firstName, List<Person> person) {
+        int flag = person.stream()
+                .anyMatch(p -> p.getFirstName().equalsIgnoreCase(firstName)) ? 1 : 0;
+        return flag == 1;
+    }
+
+    /**
      * Method To Delete Person Details
      * @param personList
      * @return PersonList

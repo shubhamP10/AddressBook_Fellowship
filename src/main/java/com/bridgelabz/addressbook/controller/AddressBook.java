@@ -65,7 +65,7 @@ public class AddressBook {
             switch (choice) {
                 case 1:
                     personList = fileOperations.getDataInList(filePath, operations);
-                    personList = addressBookService.addRecord(personList);
+                    personList = addressBookUtility.addRecord(personList);
                     fileOperations.convertToFile(personList, filePath, operations);
                     break;
                 case 2:
