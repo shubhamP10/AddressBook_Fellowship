@@ -38,7 +38,7 @@ public class ValidateInputs {
     public static String validateZip() {
         System.out.print("Enter Zip: ");
         String zip = InputUtil.getStringValue();
-        if (zip.matches("^[1-9][0-9]{6}$"))
+        if (zip.matches("^[1-9][0-9]{5,}$"))
             return zip;
         else {
             System.out.println("Invalid zip enter again");
