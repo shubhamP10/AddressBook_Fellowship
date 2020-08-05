@@ -105,6 +105,10 @@ public class AddressBook {
 
                     break;
                 case 4:
+                    if (option == 4){
+                        dbOperations.deleteRecord(con);
+                        break;
+                    }
                     personList = fileOperations.getDataInList(filePath, operations);
                     personList = addressBookUtility.deleteRecord(personList);
                     fileOperations.convertToFile(personList, filePath, operations);

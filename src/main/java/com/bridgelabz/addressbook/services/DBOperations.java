@@ -134,4 +134,20 @@ public class DBOperations {
         }
         System.out.println("Address Updated Successfully...");
     }
+
+    public void deleteRecord(Connection con) {
+        System.out.println("Enter First Name And Last Name To Edit Person Details");
+        System.out.println("Enter First Name");
+        firstName = InputUtil.getStringValue();
+        System.out.println("Enter Last Name");
+        lastName = InputUtil.getStringValue();
+        String deleteQuery = "DELETE FROM person_details Where first_name = '" + firstName + "' AND last_name = '" + lastName + "'";
+        try {
+            PreparedStatement statement = con.prepareStatement(deleteQuery);
+            statement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        System.out.println("Record Deleted Successfully");
+    }
 }
