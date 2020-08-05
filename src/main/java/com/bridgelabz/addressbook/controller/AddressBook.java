@@ -95,6 +95,10 @@ public class AddressBook {
                     addressBookService.displayRecord(person);
                     break;
                 case 3:
+                    if (option == 4){
+                        dbOperations.editPersonDetails(con);
+                        break;
+                    }
                     personList = fileOperations.getDataInList(filePath, operations);
                     personList = addressBookService.editRecord(personList);
                     fileOperations.convertToFile(personList, filePath, operations);
