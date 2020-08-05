@@ -48,9 +48,9 @@ public class RESTAssureAddressBookTest {
         Response response = RestAssured.given()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
-                .body("{\"firstName\": \"Aniket\", \"lastName\": \"Dakhare\", \"address\": \"Nagpur\", " +
-                        "\"city\": \"Gondia\", \"state\": \"Bihar\", \"zipCode\": \"457885\"," +
-                        "\"phone\": \"9999999999\"}")
+                .body("{\"firstName\": \"Akhil\", \"lastName\": \"Lingeri\", \"address\": \"Hanagal\", " +
+                        "\"city\": \"Haveri\", \"state\": \"Karnataka\", \"zipCode\": \"565656\"," +
+                        "\"phone\": \"8888888888\"}")
                 .when()
                 .put("/AddressBook/update/3");
         response.then().body("id", Matchers.any(Integer.class));
@@ -67,6 +67,5 @@ public class RESTAssureAddressBookTest {
         response.then().body("id", Matchers.not(Integer.class));
     }
 }
-
 
 // json-server --port 4000 --routes routes.json --watch RESTAssureJSONFile.json

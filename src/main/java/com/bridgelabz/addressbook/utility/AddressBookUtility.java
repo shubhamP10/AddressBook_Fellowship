@@ -16,6 +16,7 @@ public class AddressBookUtility {
 
     /**
      * Method To Add Person Records
+     *
      * @param personList List
      * @return PersonList
      */
@@ -38,11 +39,12 @@ public class AddressBookUtility {
         zip = ValidateInputs.validateZip();
         state = ValidateInputs.validateName("State");
         Person person = new Person(firstName, lastName, address, city, state, zip, phone);
-        return addressBookService.addRecord(personList,person);
+        return addressBookService.addRecord(personList, person);
     }
 
     /**
      * Method to Check Duplication of First Name
+     *
      * @Param FirstName
      */
     public boolean checkExists(String firstName, List<Person> person) {
@@ -53,6 +55,7 @@ public class AddressBookUtility {
 
     /**
      * Method To Delete Person Details
+     *
      * @param personList
      * @return PersonList
      * @throws AddressBookException
@@ -67,7 +70,7 @@ public class AddressBookUtility {
                 personList.stream().map(p -> "ID: #" + personList.indexOf(p) + " : " + p).forEach(System.out::println);
                 System.out.print("\nEnter #ID to delete Contact : ");
                 id = InputUtil.getIntValue();
-                 deleteRecord = addressBookService.deleteRecord(personList, id);
+                deleteRecord = addressBookService.deleteRecord(personList, id);
             }
         } catch (IndexOutOfBoundsException e) {
             throw new AddressBookException("Entered Wrong #ID",
@@ -78,6 +81,7 @@ public class AddressBookUtility {
 
     /**
      * Method To Search In Person Records
+     *
      * @param person
      */
     public void searchInRecords(List<Person> person) {
@@ -110,6 +114,7 @@ public class AddressBookUtility {
 
     /**
      * Method To Sort Records By Given Options
+     *
      * @param personList
      */
     public void sortRecords(List<Person> personList) {
