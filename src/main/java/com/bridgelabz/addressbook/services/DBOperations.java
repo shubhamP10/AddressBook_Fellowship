@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DBOperations {
+    PreparedStatement statement = null;
+    List<Person> personList = new ArrayList<>();
     private String firstName, lastName, address, city, state, phone, zip;
 
     public void addRecordToDB(Connection con) {
@@ -25,7 +27,6 @@ public class DBOperations {
         city = ValidateInputs.validateName("City");
         zip = ValidateInputs.validateZip();
         state = ValidateInputs.validateName("State");
-        PreparedStatement statement = null;
         try {
             statement = con.prepareStatement(insertQuery);
             statement.setString(1, firstName);
@@ -52,9 +53,8 @@ public class DBOperations {
 
     public List<Person> getDataFromDB(Connection con) {
         String getQuery = "SELECT * FROM person_details";
-        List<Person> personList = new ArrayList<>();
         try {
-            PreparedStatement statement = con.prepareStatement(getQuery);
+            statement = con.prepareStatement(getQuery);
             ResultSet result = statement.executeQuery();
             while (result.next()) {
                 firstName = result.getString("first_name");
@@ -125,9 +125,10 @@ public class DBOperations {
     }
 
     private void updateField(Connection con, String firstName, String lastName, String fieldName, String newValue) {
-        String updateQuery = "UPDATE person_details SET " + fieldName + " = '" + newValue + "' WHERE first_name = '" + firstName + "' AND last_name = '" + lastName + "'";
+        String updateQuery = "UPDATE person_details SET " + fieldName + " = '" + newValue +
+                "' WHERE first_name = '" + firstName + "' AND last_name = '" + lastName + "'";
         try {
-            PreparedStatement statement = con.prepareStatement(updateQuery);
+            statement = con.prepareStatement(updateQuery);
             statement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -143,11 +144,64 @@ public class DBOperations {
         lastName = InputUtil.getStringValue();
         String deleteQuery = "DELETE FROM person_details Where first_name = '" + firstName + "' AND last_name = '" + lastName + "'";
         try {
-            PreparedStatement statement = con.prepareStatement(deleteQuery);
+            statement = con.prepareStatement(deleteQuery);
             statement.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         System.out.println("Record Deleted Successfully");
+    }
+
+    public void sortRecords(Connection con) {
+        System.out.println("Sort By...\n"
+                + "1: First Name\n"
+                + "2: City\n"
+                + "3: State\n"
+                + "4: Zip Code\n"
+                + "5: Back");
+        int choice = InputUtil.getIntValue();
+        String sortQuery = "";
+        switch (choice) {
+            case 1:
+                sortQuery = "SELECT * FROM person_details ORDER BY first_name ASC";
+                this.sortData(con, sortQuery).forEach(System.out::println);
+                break;
+            case 2:
+                sortQuery = "SELECT * FROM person_details ORDER BY city ASC";
+                this.sortData(con, sortQuery).forEach(System.out::println);
+                break;
+            case 3:
+                sortQuery = "SELECT * FROM person_details ORDER BY state ASC";
+                this.sortData(con, sortQuery).forEach(System.out::println);
+                break;
+            case 4:
+                sortQuery = "SELECT * FROM person_details ORDER BY zip ASC";
+                this.sortData(con, sortQuery).forEach(System.out::println);
+                break;
+            case 5:
+                return;
+            default:
+                System.out.println("Please Enter Valid Option...");
+        }
+    }
+
+    private List<Person> sortData(Connection con, String sortQuery) {
+        try {
+            statement = con.prepareStatement(sortQuery);
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                firstName = result.getString("first_name");
+                lastName = result.getString("last_name");
+                address = result.getString("address");
+                city = result.getString("city");
+                state = result.getString("state");
+                phone = result.getString("phone");
+                zip = String.valueOf(result.getInt("zip"));
+                personList.add(new Person(firstName, lastName, address, city, state, zip, phone));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return personList;
     }
 }

@@ -9,8 +9,8 @@ import com.bridgelabz.addressbook.dbconnection.DBConnection;
 import com.bridgelabz.addressbook.exception.AddressBookException;
 import com.bridgelabz.addressbook.models.Person;
 import com.bridgelabz.addressbook.services.AddressBookService;
-import com.bridgelabz.addressbook.utility.AddressBookUtility;
 import com.bridgelabz.addressbook.services.DBOperations;
+import com.bridgelabz.addressbook.utility.AddressBookUtility;
 import com.bridgelabz.addressbook.utility.FileOperations;
 import com.bridgelabz.addressbook.utility.InputUtil;
 
@@ -77,7 +77,7 @@ public class AddressBook {
             int choice = InputUtil.getIntValue();
             switch (choice) {
                 case 1:
-                    if (option == 4){
+                    if (option == 4) {
                         dbOperations.addRecordToDB(con);
                         break;
                     }
@@ -86,7 +86,7 @@ public class AddressBook {
                     fileOperations.convertToFile(personList, filePath, operations);
                     break;
                 case 2:
-                    if (option == 4){
+                    if (option == 4) {
                         List<Person> personDetails = dbOperations.getDataFromDB(con);
                         addressBookService.displayRecord(personDetails);
                         break;
@@ -95,7 +95,7 @@ public class AddressBook {
                     addressBookService.displayRecord(person);
                     break;
                 case 3:
-                    if (option == 4){
+                    if (option == 4) {
                         dbOperations.editPersonDetails(con);
                         break;
                     }
@@ -105,7 +105,7 @@ public class AddressBook {
 
                     break;
                 case 4:
-                    if (option == 4){
+                    if (option == 4) {
                         dbOperations.deleteRecord(con);
                         break;
                     }
@@ -114,6 +114,10 @@ public class AddressBook {
                     fileOperations.convertToFile(personList, filePath, operations);
                     break;
                 case 5:
+                    if (option == 4) {
+                        dbOperations.sortRecords(con);
+                        break;
+                    }
                     personList = fileOperations.getDataInList(filePath, operations);
                     addressBookUtility.sortRecords(personList);
                     break;
