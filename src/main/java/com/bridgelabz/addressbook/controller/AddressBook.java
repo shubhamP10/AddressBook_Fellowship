@@ -122,6 +122,10 @@ public class AddressBook {
                     addressBookUtility.sortRecords(personList);
                     break;
                 case 6:
+                    if (option == 4) {
+                        dbOperations.searchInRecords(con);
+                        break;
+                    }
                     personList = fileOperations.getDataInList(filePath, operations);
                     addressBookUtility.searchInRecords(personList);
                     break;

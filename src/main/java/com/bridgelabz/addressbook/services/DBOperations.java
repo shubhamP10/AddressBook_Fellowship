@@ -164,19 +164,19 @@ public class DBOperations {
         switch (choice) {
             case 1:
                 sortQuery = "SELECT * FROM person_details ORDER BY first_name ASC";
-                this.sortData(con, sortQuery).forEach(System.out::println);
+                this.getDataOnQuery(con, sortQuery).forEach(System.out::println);
                 break;
             case 2:
                 sortQuery = "SELECT * FROM person_details ORDER BY city ASC";
-                this.sortData(con, sortQuery).forEach(System.out::println);
+                this.getDataOnQuery(con, sortQuery).forEach(System.out::println);
                 break;
             case 3:
                 sortQuery = "SELECT * FROM person_details ORDER BY state ASC";
-                this.sortData(con, sortQuery).forEach(System.out::println);
+                this.getDataOnQuery(con, sortQuery).forEach(System.out::println);
                 break;
             case 4:
                 sortQuery = "SELECT * FROM person_details ORDER BY zip ASC";
-                this.sortData(con, sortQuery).forEach(System.out::println);
+                this.getDataOnQuery(con, sortQuery).forEach(System.out::println);
                 break;
             case 5:
                 return;
@@ -185,7 +185,8 @@ public class DBOperations {
         }
     }
 
-    private List<Person> sortData(Connection con, String sortQuery) {
+    private List<Person> getDataOnQuery(Connection con, String sortQuery) {
+        List<Person> personData = new ArrayList<>();
         try {
             statement = con.prepareStatement(sortQuery);
             ResultSet result = statement.executeQuery();
@@ -197,11 +198,43 @@ public class DBOperations {
                 state = result.getString("state");
                 phone = result.getString("phone");
                 zip = String.valueOf(result.getInt("zip"));
-                personList.add(new Person(firstName, lastName, address, city, state, zip, phone));
+                personData.add(new Person(firstName, lastName, address, city, state, zip, phone));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return personList;
+        return personData;
+    }
+
+    public void searchInRecords(Connection con) {
+        int flag = 0;
+        while (flag == 0) {
+            System.out.println("1. Search By City\n" +
+                    "2. Search By State\n" +
+                    "3. Back\n" +
+                    "Choose Your Option");
+            int choice = InputUtil.getIntValue();
+            String searchQuery = "";
+            switch (choice) {
+                case 1:
+                    System.out.println("Enter City Name To Search: ");
+                    String city = InputUtil.getStringValue();
+                    searchQuery = "SELECT * FROM person_details WHERE city = '"+city+"'";
+                    this.getDataOnQuery(con,searchQuery).forEach(System.out::println);
+
+                    break;
+                case 2:
+                    System.out.println("Enter State Name To Search: ");
+                    String state = InputUtil.getStringValue();
+                    searchQuery = "SELECT * FROM person_details WHERE state = '"+state+"'";
+                    this.getDataOnQuery(con,searchQuery).forEach(System.out::println);
+                    break;
+                case 3:
+                    flag = 1;
+                    break;
+                default:
+                    System.out.println("Please Enter Correct Option...");
+            }
+        }
     }
 }

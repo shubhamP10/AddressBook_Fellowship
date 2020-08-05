@@ -8,7 +8,7 @@ import com.bridgelabz.addressbook.utility.InputUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddressBookService implements IAddressBookService, Runnable {
+public class AddressBookService implements IAddressBookService {
 
     /**
      * Method To Search Person By City
@@ -144,10 +144,5 @@ public class AddressBookService implements IAddressBookService, Runnable {
                     AddressBookException.exceptionType.ENTERED_WRONG_ID);
         }
         return person;
-    }
-
-    @Override
-    public void run() {
-
     }
 }
