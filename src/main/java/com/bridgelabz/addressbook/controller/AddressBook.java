@@ -10,7 +10,7 @@ import com.bridgelabz.addressbook.exception.AddressBookException;
 import com.bridgelabz.addressbook.models.Person;
 import com.bridgelabz.addressbook.services.AddressBookService;
 import com.bridgelabz.addressbook.utility.AddressBookUtility;
-import com.bridgelabz.addressbook.utility.DBOperations;
+import com.bridgelabz.addressbook.services.DBOperations;
 import com.bridgelabz.addressbook.utility.FileOperations;
 import com.bridgelabz.addressbook.utility.InputUtil;
 
@@ -86,6 +86,11 @@ public class AddressBook {
                     fileOperations.convertToFile(personList, filePath, operations);
                     break;
                 case 2:
+                    if (option == 4){
+                        List<Person> personDetails = dbOperations.getDataFromDB(con);
+                        addressBookService.displayRecord(personDetails);
+                        break;
+                    }
                     List<Person> person = fileOperations.getDataInList(filePath, operations);
                     addressBookService.displayRecord(person);
                     break;
