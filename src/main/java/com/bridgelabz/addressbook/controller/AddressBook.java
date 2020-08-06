@@ -5,17 +5,16 @@
  */
 package com.bridgelabz.addressbook.controller;
 
-import com.bridgelabz.addressbook.dbconnection.DBConnection;
 import com.bridgelabz.addressbook.exception.AddressBookException;
 import com.bridgelabz.addressbook.models.Person;
 import com.bridgelabz.addressbook.services.AddressBookService;
-import com.bridgelabz.addressbook.services.DBOperations;
+import com.bridgelabz.addressbook.services.DataBaseCRUDOperations;
+import com.bridgelabz.addressbook.services.SearchSortOperations;
 import com.bridgelabz.addressbook.utility.AddressBookUtility;
 import com.bridgelabz.addressbook.utility.FileOperations;
 import com.bridgelabz.addressbook.utility.InputUtil;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -23,17 +22,17 @@ import static java.lang.System.exit;
 
 public class AddressBook {
 
-    public static void main(String[] args) throws AddressBookException, IOException, SQLException, ClassNotFoundException {
+    public static void main(String[] args) throws AddressBookException, IOException, SQLException {
         final String JSON_SIMPLE_FILE_PATH = "src/main/resources/JSonSimpleAddressBook.json";
         final String OPEN_CSV_FILE_PATH = "src/main/resources/CSVAddressBook.csv";
         final String GSON_JSON_FILE_PATH = "src/main/resources/gsonJSONAddressBook.json";
         final int jsonSampleOperation = 1, openCSVOperation = 2, gsonOperation = 3;
         int operations = 0, flag = 0;
         String filePath = null;
-        Connection con = null;
         List<Person> personList;
         FileOperations fileOperations = new FileOperations();
-        DBOperations dbOperations = new DBOperations();
+        DataBaseCRUDOperations dataBaseCRUDOperations = new DataBaseCRUDOperations();
+        SearchSortOperations searchSortOperations = new SearchSortOperations();
         AddressBookUtility addressBookUtility = new AddressBookUtility();
         final AddressBookService addressBookService = new AddressBookService();
 
@@ -57,7 +56,6 @@ public class AddressBook {
                 operations = gsonOperation;
                 break;
             case 4:
-                con = DBConnection.getConnection();
                 break;
             default:
                 System.out.println("Invalid Choice!!!");
@@ -78,7 +76,7 @@ public class AddressBook {
             switch (choice) {
                 case 1:
                     if (option == 4) {
-                        dbOperations.addRecordToDB(con);
+                        dataBaseCRUDOperations.addRecordToDB();
                         break;
                     }
                     personList = fileOperations.getDataInList(filePath, operations);
@@ -87,7 +85,7 @@ public class AddressBook {
                     break;
                 case 2:
                     if (option == 4) {
-                        List<Person> personDetails = dbOperations.getDataFromDB(con);
+                        List<Person> personDetails = dataBaseCRUDOperations.getDataFromDB();
                         addressBookService.displayRecord(personDetails);
                         break;
                     }
@@ -96,7 +94,7 @@ public class AddressBook {
                     break;
                 case 3:
                     if (option == 4) {
-                        dbOperations.editPersonDetails(con);
+                        dataBaseCRUDOperations.editPersonDetails();
                         break;
                     }
                     personList = fileOperations.getDataInList(filePath, operations);
@@ -106,7 +104,7 @@ public class AddressBook {
                     break;
                 case 4:
                     if (option == 4) {
-                        dbOperations.deleteRecord(con);
+                        dataBaseCRUDOperations.deleteRecord();
                         break;
                     }
                     personList = fileOperations.getDataInList(filePath, operations);
@@ -115,7 +113,7 @@ public class AddressBook {
                     break;
                 case 5:
                     if (option == 4) {
-                        dbOperations.sortRecords(con);
+                        searchSortOperations.sortRecords();
                         break;
                     }
                     personList = fileOperations.getDataInList(filePath, operations);
@@ -123,7 +121,7 @@ public class AddressBook {
                     break;
                 case 6:
                     if (option == 4) {
-                        dbOperations.searchInRecords(con);
+                        searchSortOperations.searchInRecords();
                         break;
                     }
                     personList = fileOperations.getDataInList(filePath, operations);
